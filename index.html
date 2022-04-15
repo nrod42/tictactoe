@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./script.js" defer></script>
+    <title>Tic-Tac-Toe</title>
+</head>
+<body>
+    <div class="gameScreen">
+        <h1 class="heading">Tic-Tac-Toe</h1>
+        <div class = "newGameFormContainer">
+            <form id="newGameForm">
+                <div class="player1Form">
+                    <label for="player1">Player 1:</label>
+                    <input type="text" id="player1" name="player1" required>
+                </div>
+                <div class="player2Form">
+                    <label for="player2">Player 2:</label>
+                    <input type="text" id="player2" name="player2" required>
+                </div>
+                <div class="formBtns">
+                    <button class="playBtn" type="submit">Play</button>
+                    <button class="cancelBtn" type="button">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div class="gameBoard">
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+        </div>
+        <div><button id = 'newGameBtn1' class="newGameBtn">New Game</button></div>
+    </div>
+    <div class="resultScreen">
+        <h4>Game Over</h4>
+        <p class="winnerDisplay"></p>
+        <p class="player1Score"></p>
+        <p class="player2Score"></p>
+        <button class="playAgainBtn">Play Again?</button>
+        <button id = 'newGameBtn2' class="newGameBtn">New Game</button>
+    </div>
+</body>
+</html>
