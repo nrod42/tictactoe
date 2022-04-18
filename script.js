@@ -3,6 +3,9 @@
 const cells = document.querySelectorAll('.cell');
 const cellsArray = Array.from(cells);
 const gameScreen = document.querySelector('.gameScreen');
+const scoreBoard = document.querySelector('.scoreBoard');
+const scoreBoardPlayer1 = document.querySelector('.scoreBoardPlayer1');
+const scoreBoardPlayer2 = document.querySelector('.scoreBoardPlayer2');
 const newGameBtns = document.querySelectorAll('.newGameBtn');
 const playBtn = document.querySelector('.playBtn');
 const resultScreen = document.querySelector('.resultScreen');
@@ -138,6 +141,7 @@ function newGame () {
     newGameForm.player1.value = "";
     newGameForm.player2.value = "";
     resultScreen.style.display = 'none';
+    scoreBoard.style.display = 'none';
     gameScreen.style.filter = 'blur(0)';
     turn = 0;
 }
@@ -150,4 +154,7 @@ function playAgain () {
     });
     gameScreen.style.filter = 'blur(0)';
     turn = 0;
+    scoreBoard.style.display = 'grid';
+    scoreBoardPlayer1.textContent = player1.getName() + ': ' + player1.getScore();
+    scoreBoardPlayer2.textContent = player2.getName() + ': ' + player2.getScore();
 }
