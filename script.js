@@ -1,11 +1,10 @@
-//Make a new div at bottom that says whos turn it is
-
 const cells = document.querySelectorAll('.cell');
 const cellsArray = Array.from(cells);
 const gameScreen = document.querySelector('.gameScreen');
 const scoreBoard = document.querySelector('.scoreBoard');
 const scoreBoardPlayer1 = document.querySelector('.scoreBoardPlayer1');
 const scoreBoardPlayer2 = document.querySelector('.scoreBoardPlayer2');
+const playerTurn = document.querySelector('.playerTurn');
 const newGameBtns = document.querySelectorAll('.newGameBtn');
 const playBtn = document.querySelector('.playBtn');
 const resultScreen = document.querySelector('.resultScreen');
@@ -26,15 +25,16 @@ const winningCond = [
     [2, 4, 6]
 ];
 
-const Player = (name, mark) => {
+const Player = (name, mark, color) => {
     const getName = () => name;
     const getMark = () => mark;
+    const getColor = () => color;
     let score = 0;
     const addScore = (x) => {
         score += x;
     };
     const getScore = () => score;
-    return {getName, getMark, getScore, addScore}
+    return {getName, getMark, getColor, getScore, addScore}
 };
 
 const gameController = (() => {
@@ -47,11 +47,13 @@ const gameController = (() => {
 
     const showGame = (e)  => {
         e.preventDefault();
-        gameBoard.style.display = 'grid'
-        newGameForm.style.display = 'none'
-        player1 = Player(newGameForm.player1.value, 'X');
-        player2 = Player(newGameForm.player2.value, 'O');
+        newGameForm.style.display = 'none';
+        gameBoard.style.display = 'grid';
+        playerTurn.style.display = 'flex';
+        player1 = Player(newGameForm.player1.value, 'X', 'blue');
+        player2 = Player(newGameForm.player2.value, 'O', 'red');
         currentPlayer = player1;
+        playerTurn.textContent = 'It\'s ' + currentPlayer.getName() + '\'s turn';
         clickEnable();
     }
 
@@ -59,11 +61,13 @@ const gameController = (() => {
         if (!e.target.classList.contains('clickEnabled')) return; //checks if clickEnabled class is active. If its not (which occurs when game is over and on result screen), then adding a mark is "disabled"
         if (e.target.textContent != "") return; //prevents cells fromb being marked twice
         e.target.textContent = currentPlayer.getMark();
+        e.target.style.color = currentPlayer.getColor();
         currentBoard = cellsArray.map(cell => cell.textContent); //updates the current board array every turn
         turn++;
         checkTie();
         showWinner();
         switchPlayer();
+        playerTurn.textContent = 'It\'s ' + currentPlayer.getName() + '\'s turn';
     }
 
     const switchPlayer = () => {
@@ -126,11 +130,14 @@ const gameController = (() => {
             clickEnable(); //Re-adds the class which allows a mark to be placed again since its a new game
         });
         gameBoard.style.display = 'none';
+        scoreBoard.style.display = 'none';
         newGameForm.style.display = 'flex';
         newGameForm.player1.value = "";
         newGameForm.player2.value = "";
+        playerTurn.style.display = 'none';
         resultScreen.style.display = 'none';
         gameScreen.style.filter = 'blur(0)';
+        
         turn = 0;
     }
 
@@ -144,7 +151,9 @@ const gameController = (() => {
         turn = 0;
         scoreBoard.style.display = 'grid';
         scoreBoardPlayer1.textContent = player1.getName() + ': ' + player1.getScore();
+        scoreBoardPlayer1.style.color = player1.getColor();
         scoreBoardPlayer2.textContent = player2.getName() + ': ' + player2.getScore();
+        scoreBoardPlayer2.style.color = player2.getColor();
     }
 
     return {showGame, makeMove, showWinner, newGame, playAgain};
